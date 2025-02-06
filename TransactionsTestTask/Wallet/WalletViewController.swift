@@ -116,11 +116,12 @@ class WalletViewController: UIViewController {
         NSLayoutConstraint.activate([
             labelsStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
             labelsStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            labelsStack.widthAnchor.constraint(equalToConstant: 250),
             
             bitcoinRateLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
             bitcoinRateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             
-            addFundsButton.leadingAnchor.constraint(equalTo: labelsStack.trailingAnchor, constant: 25),
+            addFundsButton.leadingAnchor.constraint(equalTo: labelsStack.trailingAnchor, constant: 10),
             addFundsButton.centerYAnchor.constraint(equalTo: labelsStack.centerYAnchor),
             addFundsButton.heightAnchor.constraint(equalToConstant: 44),
             addFundsButton.widthAnchor.constraint(equalToConstant: 44),
@@ -141,7 +142,7 @@ class WalletViewController: UIViewController {
         viewModel.$balance
             .receive(on: DispatchQueue.main)
             .sink { [weak self] balance in
-                self?.balanceLabel.text = "\(balance) BTC"
+                self?.balanceLabel.text = "\(balance.btcFormated()) BTC"
             }
             .store(in: &cancellables)
 
@@ -192,7 +193,7 @@ extension WalletViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let transaction = viewModel.transactions[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "TransactionCell", for: indexPath)
-        cell.textLabel?.text = "\(transaction.category.rawValue) - \(transaction.amount) BTC"
+        cell.textLabel?.text = "\(transaction.category.title) - \(transaction.amount.btcFormated()) BTC"
         return cell
     }
 

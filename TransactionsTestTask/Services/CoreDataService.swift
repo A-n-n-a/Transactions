@@ -11,7 +11,9 @@ import Foundation
 
 protocol StorageService {
     func fetchTransactions() -> AnyPublisher<[Transaction], Never>
-    func addTransaction(amount: Double, category: TransactionCategory)
+    func fetchWalletBalance() -> AnyPublisher<Double, Never>
+    func addTransaction(amount: Double, category: TransactionCategory) -> AnyPublisher<Void, Error>
+    func updateWalletBalance(amount: Double) -> AnyPublisher<Void, Error>
 }
 
 final class CoreDataService: StorageService {
@@ -46,19 +48,65 @@ final class CoreDataService: StorageService {
         }
     }
     
-    func addTransaction(amount: Double, category: TransactionCategory) {
-        
-        let transaction = TransactionEntity(context: context)
-        transaction.amount = amount
-        transaction.category = category.rawValue
-        transaction.date = .now
+    func fetchWalletBalance() -> AnyPublisher<Double, Never> {
+        Future { promise in
+            let request: NSFetchRequest<WalletEntity> = WalletEntity.fetchRequest()
 
-        do {
-            try context.save()
-        } catch {
-            print("Failed to save transaction: \(error)")
+            do {
+                let wallets = try self.context.fetch(request)
+                let balance = wallets.first?.balance ?? 0.0
+                promise(.success(balance))
+            } catch {
+                print("Failed to fetch wallet balance: \(error)")
+                promise(.success(0.0))
+            }
         }
+        .receive(on: DispatchQueue.main)
+        .eraseToAnyPublisher()
     }
-
     
+    func addTransaction(amount: Double, category: TransactionCategory) -> AnyPublisher<Void, Error> {
+        Future { promise in
+            let transaction = TransactionEntity(context: self.context)
+            transaction.amount = amount
+            transaction.category = category.rawValue
+            transaction.date = .now
+
+            do {
+                try self.context.save()
+                promise(.success(()))
+            } catch {
+                promise(.failure(error))
+            }
+        }
+        .receive(on: DispatchQueue.main)
+        .eraseToAnyPublisher()
+    }
+    
+    func updateWalletBalance(amount: Double) -> AnyPublisher<Void, Error>  {
+        Future { promise in
+            let request: NSFetchRequest<WalletEntity> = WalletEntity.fetchRequest()
+            
+            do {
+                let wallets = try self.context.fetch(request)
+                let wallet: WalletEntity
+                
+                if let existingWallet = wallets.first {
+                    wallet = existingWallet
+                } else {
+                    wallet = WalletEntity(context: self.context)
+                    wallet.balance = 0.0 
+                }
+                
+                wallet.balance += amount
+                
+                try self.context.save()
+                promise(.success(()))
+            } catch {
+                promise(.failure(error))
+            }
+        }
+        .receive(on: DispatchQueue.main)
+        .eraseToAnyPublisher()
+    }
 }

@@ -21,9 +21,16 @@ final class WalletViewModel {
     init(storageService: StorageService, rateService: RateService) {
         self.storageService = storageService
         self.rateService = rateService
+        loadBalance()
         rateService.fetchRate()
         rateService.ratePublisher
             .assign(to: \.bitcoinRate, on: self)
+            .store(in: &cancellables)
+    }
+    
+    func loadBalance() {
+        storageService.fetchWalletBalance()
+            .assign(to: \.balance, on: self)
             .store(in: &cancellables)
     }
     
@@ -35,12 +42,43 @@ final class WalletViewModel {
     
     func addTransaction(amount: Double, category: TransactionCategory) {
         storageService.addTransaction(amount: amount, category: category)
-        loadTransactions()
+            .sink(receiveCompletion: { completion in
+                if case .failure(let error) = completion {
+                    //TODO: show error alert
+                    print("Error saving transaction: \(error)")
+                }
+            }, receiveValue: { [weak self] in
+                self?.loadTransactions()
+            })
+            .store(in: &cancellables)
     }
     
     func addFunds(amount: Double) {
-        balance += amount
         storageService.addTransaction(amount: amount, category: .deposit)
+            .sink(receiveCompletion: { completion in
+                if case .failure(let error) = completion {
+                    //TODO: show error alert
+                    print("Error saving transaction: \(error)")
+                }
+            }, receiveValue: { [weak self] in
+                self?.loadTransactions()
+                self?.balance += amount
+                self?.updateWalletBalance(amount: amount)
+            })
+            .store(in: &cancellables)
     }
     
+    func updateWalletBalance(amount: Double) {
+        storageService.updateWalletBalance(amount: amount)
+            .sink(receiveCompletion: { completion in
+                if case .failure(let error) = completion {
+                    //TODO: show error alert
+                    print("Error saving transaction: \(error)")
+                }
+            }, receiveValue: {// [weak self] in
+//                self?.loadTransactions()
+                
+            })
+            .store(in: &cancellables)
+    }
 }
