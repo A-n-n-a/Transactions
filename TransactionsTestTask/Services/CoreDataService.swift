@@ -5,23 +5,60 @@
 //  Created by Anna on 2/5/25.
 //
 
-import Foundation
+import Combine
 import CoreData
+import Foundation
 
-final class CoreDataService {
-    static let shared = CoreDataService()
+protocol StorageService {
+    func fetchTransactions() -> AnyPublisher<[Transaction], Never>
+    func addTransaction(amount: Double, category: TransactionCategory)
+}
 
-    lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "TransactionsTestTask")
-        container.loadPersistentStores { _, error in
+final class CoreDataService: StorageService {
+    
+    private let container: NSPersistentContainer
+
+    init() {
+        container = NSPersistentContainer(name: "TransactionsTestTask")
+        container.loadPersistentStores { description, error in
             if let error = error {
-                fatalError("Failed to load Core Data service: \(error)")
+                fatalError("Error loading Core Data service: \(error.localizedDescription)")
             }
         }
-        return container
-    }()
-
-    var viewContext: NSManagedObjectContext {
-        return persistentContainer.viewContext
     }
+
+    var context: NSManagedObjectContext {
+        container.viewContext
+    }
+    
+    func fetchTransactions() -> AnyPublisher<[Transaction], Never> {
+        
+        let request: NSFetchRequest<TransactionEntity> = TransactionEntity.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+
+        do {
+            let result = try context.fetch(request)
+            let transactions = result.map { Transaction(entity: $0) }
+            return Just(transactions).eraseToAnyPublisher()
+        } catch {
+            print("Failed to fetch transactions: \(error)")
+            return Just([]).eraseToAnyPublisher()
+        }
+    }
+    
+    func addTransaction(amount: Double, category: TransactionCategory) {
+        
+        let transaction = TransactionEntity(context: context)
+        transaction.amount = amount
+        transaction.category = category.rawValue
+        transaction.date = .now
+
+        do {
+            try context.save()
+        } catch {
+            print("Failed to save transaction: \(error)")
+        }
+    }
+
+    
 }

@@ -13,12 +13,12 @@
 import Combine
 import Foundation
 
-protocol BitcoinRateService {
+protocol RateService {
     var ratePublisher: AnyPublisher<Double, Never> { get }
     func fetchRate()
 }
 
-final class BitcoinRateServiceImpl: BitcoinRateService {
+final class BitcoinRateService: RateService {
     private let rateSubject = PassthroughSubject<Double, Never>()
     private var cancellables = Set<AnyCancellable>()
 
@@ -26,13 +26,14 @@ final class BitcoinRateServiceImpl: BitcoinRateService {
         rateSubject.eraseToAnyPublisher()
     }
 
+    //TODO: fetch periodically
     func fetchRate() {
         let url = URL(string: "https://api.coindesk.com/v1/bpi/currentprice.json")!
 
         URLSession.shared.dataTaskPublisher(for: url)
             .map(\.data)
             .decode(type: BitcoinRateResponse.self, decoder: JSONDecoder())
-            .map { $0.bpi["USD"]?.rateFloat ?? 0.0 }
+            .map { $0.bpi["USD"]?.rate ?? 0.0 }
             .replaceError(with: 0.0)
             .sink { [weak self] newRate in
                 self?.rateSubject.send(newRate)
@@ -45,14 +46,14 @@ struct BitcoinRateResponse: Decodable {
     let bpi: [String: CurrencyRate]
     
     var usdRate: Double? {
-        return bpi["USD"]?.rateFloat
+        return bpi["USD"]?.rate
     }
 }
 
 struct CurrencyRate: Decodable {
-    let rateFloat: Double
+    let rate: Double
     
     enum CodingKeys: String, CodingKey {
-        case rateFloat = "rate_float"
+        case rate = "rate_float"
     }
 }

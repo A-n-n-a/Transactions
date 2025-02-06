@@ -18,11 +18,10 @@ enum ServicesAssembler {
     
     // MARK: - BitcoinRateService
     
-    static let bitcoinRateService: BitcoinRateService = {
-        let service = BitcoinRateServiceImpl()
+    static let bitcoinRateService: RateService = {
+        let service = BitcoinRateService()
         let analyticsService = Self.analyticsService
 
-        // Subscribe to the rate publisher and log updates
         service.ratePublisher
             .sink { rate in
                 analyticsService.trackEvent(
@@ -40,7 +39,10 @@ enum ServicesAssembler {
     static let analyticsService: AnalyticsService = {
         return AnalyticsServiceImpl()
     }()
+    
+    static let storageService: StorageService = {
+        return CoreDataService()
+    }()
 
-    // Store Combine subscriptions to avoid premature deallocation
     private static var cancellables = Set<AnyCancellable>()
 }

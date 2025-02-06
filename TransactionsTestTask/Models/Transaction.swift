@@ -16,7 +16,7 @@ struct Transaction {
     init(entity: TransactionEntity) {
         self.amount = entity.amount
         self.category = TransactionCategory(rawValue: entity.category ?? "other") ?? .other
-        self.date = entity.date ?? Date()
+        self.date = entity.date ?? .now
     }
 }
 

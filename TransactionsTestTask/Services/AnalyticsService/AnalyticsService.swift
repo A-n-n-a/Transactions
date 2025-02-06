@@ -19,7 +19,9 @@ protocol AnalyticsService {
 }
 
 final class AnalyticsServiceImpl: AnalyticsService {
+    
     private var cancellables = Set<AnyCancellable>()
+    private var events: [AnalyticsEvent] = []
 
     init(rateService: BitcoinRateService? = nil) {
         rateService?.ratePublisher
@@ -30,34 +32,14 @@ final class AnalyticsServiceImpl: AnalyticsService {
     }
 
     func trackEvent(name: String, parameters: [String: String]) {
+        let event = AnalyticsEvent(
+            name: name,
+            parameters: parameters,
+            date: .now
+        )
+        events.append(event)
         print("LOG: \(name) - \(parameters)")
     }
+    
+    //TODO: fetch events by name and by date range
 }
-//protocol AnalyticsService: AnyObject {
-//    
-//    func trackEvent(name: String, parameters: [String: String])
-//}
-
-//final class AnalyticsServiceImpl {
-//    
-//    private var events: [AnalyticsEvent] = []
-//    
-//    // MARK: - Init
-//    
-//    init() {
-//        
-//    }
-//}
-
-//extension AnalyticsServiceImpl: AnalyticsService {
-//    
-//    func trackEvent(name: String, parameters: [String: String]) {
-//        let event = AnalyticsEvent(
-//            name: name,
-//            parameters: parameters,
-//            date: .now
-//        )
-//        
-//        events.append(event)
-//    }
-//}

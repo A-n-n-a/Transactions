@@ -12,12 +12,64 @@ class WalletViewController: UIViewController {
     private let viewModel: WalletViewModel
     private var cancellables = Set<AnyCancellable>()
     
-    // UI Elements
-    private let balanceLabel = UILabel()
-    private let bitcoinRateLabel = UILabel()
-    private let addFundsButton = UIButton()
-    private let addTransactionButton = UIButton()
-    private let tableView = UITableView()
+    private var balanceTitleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .boldSystemFont(ofSize: 24)
+        label.textAlignment = .center
+        label.text = "Balance:"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private var balanceLabel: UILabel = {
+        let label = UILabel()
+        label.font = .boldSystemFont(ofSize: 24)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private lazy var labelsStack: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [balanceTitleLabel, balanceLabel])
+        stack.axis = .vertical
+        stack.spacing = 8
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+    private let bitcoinRateLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 18)
+        label.textAlignment = .right
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let addFundsButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("+", for: .normal)
+        button.backgroundColor = .systemGreen
+        button.layer.cornerRadius = 22
+        button.clipsToBounds = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private let addTransactionButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Add Transaction", for: .normal)
+        button.backgroundColor = .systemGreen
+        button.layer.cornerRadius = 8
+        button.clipsToBounds = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
 
     init(viewModel: WalletViewModel) {
         self.viewModel = viewModel
@@ -34,62 +86,49 @@ class WalletViewController: UIViewController {
         bindViewModel()
         viewModel.loadTransactions()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
 
-    // Setup UI
     private func setupUI() {
         view.backgroundColor = .white
         
-        // Balance Label
-        balanceLabel.font = .boldSystemFont(ofSize: 24)
-        balanceLabel.textAlignment = .center
-        view.addSubview(balanceLabel)
-        
-        // Bitcoin Rate Label
-        bitcoinRateLabel.font = .systemFont(ofSize: 18)
-        bitcoinRateLabel.textAlignment = .center
-        view.addSubview(bitcoinRateLabel)
-        
-        // Add Funds Button
-        addFundsButton.setTitle("Add Funds", for: .normal)
-        addFundsButton.backgroundColor = .systemBlue
         addFundsButton.addTarget(self, action: #selector(didTapAddFunds), for: .touchUpInside)
-        view.addSubview(addFundsButton)
-        
-        // Add Transaction Button
-        addTransactionButton.setTitle("Add Transaction", for: .normal)
-        addTransactionButton.backgroundColor = .systemGreen
         addTransactionButton.addTarget(self, action: #selector(didTapAddTransaction), for: .touchUpInside)
-        view.addSubview(addTransactionButton)
         
-        // Transactions TableView
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TransactionCell")
         tableView.dataSource = self
         tableView.delegate = self
+        
+        view.addSubview(labelsStack)
+        view.addSubview(bitcoinRateLabel)
+        view.addSubview(addFundsButton)
+        view.addSubview(addTransactionButton)
         view.addSubview(tableView)
         
         setupConstraints()
     }
 
-    // Layout Constraints
     private func setupConstraints() {
-        balanceLabel.translatesAutoresizingMaskIntoConstraints = false
-        bitcoinRateLabel.translatesAutoresizingMaskIntoConstraints = false
-        addFundsButton.translatesAutoresizingMaskIntoConstraints = false
-        addTransactionButton.translatesAutoresizingMaskIntoConstraints = false
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
-            balanceLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
-            balanceLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            labelsStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
+            labelsStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            bitcoinRateLabel.topAnchor.constraint(equalTo: balanceLabel.bottomAnchor, constant: 10),
-            bitcoinRateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            bitcoinRateLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            bitcoinRateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             
-            addFundsButton.topAnchor.constraint(equalTo: bitcoinRateLabel.bottomAnchor, constant: 20),
-            addFundsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            addFundsButton.leadingAnchor.constraint(equalTo: labelsStack.trailingAnchor, constant: 25),
+            addFundsButton.centerYAnchor.constraint(equalTo: labelsStack.centerYAnchor),
+            addFundsButton.heightAnchor.constraint(equalToConstant: 44),
+            addFundsButton.widthAnchor.constraint(equalToConstant: 44),
             
-            addTransactionButton.topAnchor.constraint(equalTo: addFundsButton.bottomAnchor, constant: 20),
+            addTransactionButton.topAnchor.constraint(equalTo: labelsStack.bottomAnchor, constant: 20),
             addTransactionButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            addTransactionButton.widthAnchor.constraint(equalToConstant: 200),
+            addTransactionButton.heightAnchor.constraint(equalToConstant: 50),
             
             tableView.topAnchor.constraint(equalTo: addTransactionButton.bottomAnchor, constant: 20),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -98,19 +137,18 @@ class WalletViewController: UIViewController {
         ])
     }
 
-    // Bind ViewModel to update UI
     private func bindViewModel() {
         viewModel.$balance
             .receive(on: DispatchQueue.main)
             .sink { [weak self] balance in
-                self?.balanceLabel.text = "Balance: \(balance) BTC"
+                self?.balanceLabel.text = "\(balance) BTC"
             }
             .store(in: &cancellables)
 
         viewModel.$bitcoinRate
             .receive(on: DispatchQueue.main)
             .sink { [weak self] rate in
-                self?.bitcoinRateLabel.text = "BTC Rate: \(rate) USD"
+                self?.bitcoinRateLabel.text = String(format: "%.2f USD", rate)
             }
             .store(in: &cancellables)
 
@@ -122,7 +160,7 @@ class WalletViewController: UIViewController {
             .store(in: &cancellables)
     }
 
-    // Actions
+    
     @objc private func didTapAddFunds() {
         let alert = UIAlertController(title: "Add Funds", message: "Enter the amount of BTC to add", preferredStyle: .alert)
         alert.addTextField { textField in
@@ -145,8 +183,7 @@ class WalletViewController: UIViewController {
     }
 }
 
-// MARK: - UITableViewDataSource
-extension WalletViewController: UITableViewDataSource {
+extension WalletViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.transactions.count
@@ -158,10 +195,6 @@ extension WalletViewController: UITableViewDataSource {
         cell.textLabel?.text = "\(transaction.category.rawValue) - \(transaction.amount) BTC"
         return cell
     }
-}
-
-// MARK: - UITableViewDelegate
-extension WalletViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)

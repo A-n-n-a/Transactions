@@ -11,14 +11,17 @@ import UIKit
 final class AppCoordinator {
     private let window: UIWindow
     private let navigationController: UINavigationController
+    private let coreDataService = ServicesAssembler.storageService
+    private let bitcoinRateService = ServicesAssembler.bitcoinRateService
 
-    init(window: UIWindow, navigationController: UINavigationController) {  // ✅ Accept navigationController
+    init(window: UIWindow, navigationController: UINavigationController) {
         self.window = window
         self.navigationController = navigationController
     }
 
     func start() {
-        let walletCoordinator = WalletCoordinator(navigationController: navigationController)
+        
+        let walletCoordinator = WalletCoordinator(navigationController: navigationController, storageService: coreDataService, rateService: bitcoinRateService)
         walletCoordinator.start()
 
         window.rootViewController = navigationController

@@ -10,15 +10,17 @@ import UIKit
 
 final class WalletCoordinator {
     private let navigationController: UINavigationController
+    private let storageService: StorageService
+    private let rateService: RateService
 
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, storageService: StorageService, rateService: RateService) {
         self.navigationController = navigationController
+        self.storageService = storageService
+        self.rateService = rateService
     }
 
     func start() {
-        let rateService = BitcoinRateServiceImpl()
-        let transactionService = TransactionServiceImpl(container: CoreDataService.shared.persistentContainer)
-        let walletViewModel = WalletViewModel(rateService: rateService, transactionService: transactionService)
+        let walletViewModel = WalletViewModel(storageService: storageService, rateService: rateService)
         let walletVC = WalletViewController(viewModel: walletViewModel)
         navigationController.pushViewController(walletVC, animated: true)
     }
