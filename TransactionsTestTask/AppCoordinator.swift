@@ -9,15 +9,19 @@ import Foundation
 import UIKit
 
 final class AppCoordinator {
-    
-    private let rateService = BitcoinRateServiceImpl()
+    private let window: UIWindow
+    private let navigationController: UINavigationController
 
-    init() {
-        
+    init(window: UIWindow, navigationController: UINavigationController) {  // ✅ Accept navigationController
+        self.window = window
+        self.navigationController = navigationController
     }
 
-    func start() -> UIViewController {
-        let viewModel = WalletViewModel()
-        return WalletViewController(viewModel: viewModel)
+    func start() {
+        let walletCoordinator = WalletCoordinator(navigationController: navigationController)
+        walletCoordinator.start()
+
+        window.rootViewController = navigationController
+        window.makeKeyAndVisible()
     }
 }
