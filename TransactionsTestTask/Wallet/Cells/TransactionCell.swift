@@ -62,7 +62,7 @@ class TransactionCell: UITableViewCell {
             stack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             stack.topAnchor.constraint(equalTo: contentView.topAnchor),
             stack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            categoryIcon.widthAnchor.constraint(equalToConstant: 20)
+            categoryIcon.widthAnchor.constraint(equalToConstant: 24)
         ])
     }
 

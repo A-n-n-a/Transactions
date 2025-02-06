@@ -5,6 +5,7 @@
 //  Created by Anna on 2/6/25.
 //
 
+import Combine
 import Foundation
 import UIKit
 
@@ -12,26 +13,23 @@ class AddTransactionCoordinator {
     
     private let navigationController: UINavigationController
     private let storageService: StorageService
+    private var cancellables = Set<AnyCancellable>()
     
-    // MARK: - Initializer
     init(navigationController: UINavigationController, storageService: StorageService) {
         self.navigationController = navigationController
         self.storageService = storageService
     }
     
-    // MARK: - Start
     func start() {
         let viewModel = AddTransactionViewModel(storageService: storageService)
         let addTransactionVC = AddTransactionViewController(viewModel: viewModel)
-        //TODO: refactor with Combine
-        addTransactionVC.onAddTransaction = {
-            self.updateTransactions()
-        }
+        
+        addTransactionVC.addTransactionPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                self.navigationController.popViewController(animated: true)
+            }
+            .store(in: &cancellables)
         navigationController.pushViewController(addTransactionVC, animated: true)
-    }
-    
-    // MARK: - Update Transactions
-    private func updateTransactions() {
-        // Update logic to refresh the data if needed
     }
 }

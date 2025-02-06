@@ -20,13 +20,13 @@ enum TransactionCategory: String, CaseIterable {
         case .deposit:
             UIImage(systemName: "arrow.down.circle.fill")
         case .groceries:
-            UIImage(systemName: "cart.fill")
+            UIImage(systemName: "cart.circle.fill")
         case .taxi:
-            UIImage(systemName: "taxi.fill")
+            UIImage(systemName: "car.circle.fill")
         case .electronics:
-            UIImage(systemName: "tv.fill")
+            UIImage(systemName: "tv.circle.fill")
         case .restaurant:
-            UIImage(systemName: "fork.knife")
+            UIImage(systemName: "fork.knife.circle.fill")
         case .other:
             UIImage(systemName: "ellipsis.circle.fill")
         }

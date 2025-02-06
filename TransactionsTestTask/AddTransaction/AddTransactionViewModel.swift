@@ -10,23 +10,21 @@ import Foundation
 
 class AddTransactionViewModel {
     
-    // MARK: - Published Properties
     @Published var amount: String = ""
-    @Published var selectedCategory: TransactionCategory = .other
+    @Published var selectedCategory: TransactionCategory = .groceries
     @Published var isAmountValid: Bool = true
     
     private let storageService: StorageService
     private var cancellables = Set<AnyCancellable>()
     
-    // MARK: - Initializer
+    let allAvailableCategories = TransactionCategory.allCases.filter { $0 != .deposit }
+    
     init(storageService: StorageService) {
         self.storageService = storageService
     }
     
-    // MARK: - Add Transaction
-    func addTransaction() -> AnyPublisher<Void, Error> {
-        // Check if the amount is valid
-        guard let amount = Double(amount), amount > 0 else {
+    func addTransaction(amountString: String?) -> AnyPublisher<Void, Error> {
+        guard let amountString, let amount = Double(amountString), amount > 0 else {
             isAmountValid = false
             return Fail(error: NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid amount"])).eraseToAnyPublisher()
         }

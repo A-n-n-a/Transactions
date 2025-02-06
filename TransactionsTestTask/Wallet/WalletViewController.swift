@@ -89,12 +89,12 @@ class WalletViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         bindViewModel()
-        viewModel.loadTransactions()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
+        viewModel.loadTransactions()
     }
 
     private func setupUI() {
