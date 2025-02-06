@@ -29,6 +29,9 @@
 		95EBC0242D54F7840019E90C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0232D54F7840019E90C /* Extensions.swift */; };
 		95EBC0262D5511180019E90C /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0252D5511180019E90C /* Category.swift */; };
 		95EBC0292D5512DF0019E90C /* TransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0282D5512DF0019E90C /* TransactionCell.swift */; };
+		95EBC02C2D551BCB0019E90C /* AddTransactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC02B2D551BCB0019E90C /* AddTransactionViewModel.swift */; };
+		95EBC02E2D551BE40019E90C /* AddTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC02D2D551BE40019E90C /* AddTransactionViewController.swift */; };
+		95EBC0302D551C000019E90C /* AddTransactionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC02F2D551C000019E90C /* AddTransactionCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +78,9 @@
 		95EBC0232D54F7840019E90C /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		95EBC0252D5511180019E90C /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		95EBC0282D5512DF0019E90C /* TransactionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCell.swift; sourceTree = "<group>"; };
+		95EBC02B2D551BCB0019E90C /* AddTransactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionViewModel.swift; sourceTree = "<group>"; };
+		95EBC02D2D551BE40019E90C /* AddTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionViewController.swift; sourceTree = "<group>"; };
+		95EBC02F2D551C000019E90C /* AddTransactionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,13 +164,14 @@
 				95EBC0132D53C47C0019E90C /* AppCoordinator.swift */,
 				0DF1D13E2D22DC2D001626E7 /* Services */,
 				95EBC01F2D54A7D40019E90C /* Wallet */,
+				95EBC02A2D551BA50019E90C /* AddTransaction */,
+				95EBC0202D54A7F90019E90C /* Models */,
+				95EBC0232D54F7840019E90C /* Extensions.swift */,
 				1CA3B65B2D22B0F500176711 /* Main.storyboard */,
 				1CA3B6612D22B0F600176711 /* Assets.xcassets */,
 				1CA3B6632D22B0F600176711 /* LaunchScreen.storyboard */,
 				1CA3B6662D22B0F600176711 /* Info.plist */,
 				1CA3B65E2D22B0F500176711 /* TransactionsTestTask.xcdatamodeld */,
-				95EBC0202D54A7F90019E90C /* Models */,
-				95EBC0232D54F7840019E90C /* Extensions.swift */,
 			);
 			path = TransactionsTestTask;
 			sourceTree = "<group>";
@@ -204,6 +211,16 @@
 				95EBC0282D5512DF0019E90C /* TransactionCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		95EBC02A2D551BA50019E90C /* AddTransaction */ = {
+			isa = PBXGroup;
+			children = (
+				95EBC02F2D551C000019E90C /* AddTransactionCoordinator.swift */,
+				95EBC02D2D551BE40019E90C /* AddTransactionViewController.swift */,
+				95EBC02B2D551BCB0019E90C /* AddTransactionViewModel.swift */,
+			);
+			path = AddTransaction;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -341,8 +358,10 @@
 				0D1540612D22EF5D00D6D63F /* AnalyticsEvent.swift in Sources */,
 				0DF1D1432D22DCD8001626E7 /* PerformOnce.swift in Sources */,
 				95EBC0142D53C47C0019E90C /* AppCoordinator.swift in Sources */,
+				95EBC02C2D551BCB0019E90C /* AddTransactionViewModel.swift in Sources */,
 				0DF1D1452D22DD06001626E7 /* BitcoinRateService.swift in Sources */,
 				95EBC01C2D53D2540019E90C /* CoreDataService.swift in Sources */,
+				95EBC02E2D551BE40019E90C /* AddTransactionViewController.swift in Sources */,
 				0DF1D1472D22DD4A001626E7 /* AnalyticsService.swift in Sources */,
 				95EBC01A2D53D0B20019E90C /* Transaction.swift in Sources */,
 				1CA3B65A2D22B0F500176711 /* WalletViewController.swift in Sources */,
@@ -353,6 +372,7 @@
 				1CA3B6582D22B0F500176711 /* SceneDelegate.swift in Sources */,
 				95EBC0292D5512DF0019E90C /* TransactionCell.swift in Sources */,
 				1CA3B6602D22B0F500176711 /* TransactionsTestTask.xcdatamodeld in Sources */,
+				95EBC0302D551C000019E90C /* AddTransactionCoordinator.swift in Sources */,
 				0DF1D1402D22DC51001626E7 /* ServicesAssembler.swift in Sources */,
 				95EBC01E2D53D9420019E90C /* WalletCoordinator.swift in Sources */,
 			);

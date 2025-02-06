@@ -19,9 +19,10 @@ protocol RateService {
 }
 
 final class BitcoinRateService: RateService {
-    private let rateSubject = PassthroughSubject<Double, Never>()
+    
     private var cancellables = Set<AnyCancellable>()
-
+    
+    private let rateSubject = PassthroughSubject<Double, Never>()
     var ratePublisher: AnyPublisher<Double, Never> {
         rateSubject.eraseToAnyPublisher()
     }

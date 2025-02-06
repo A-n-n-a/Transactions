@@ -12,6 +12,11 @@ class WalletViewController: UIViewController {
     private let viewModel: WalletViewModel
     private var cancellables = Set<AnyCancellable>()
     
+    private let addTransactionSubject = PassthroughSubject<Void, Never>()
+    var addTransactionPublisher: AnyPublisher<Void, Never> {
+        addTransactionSubject.eraseToAnyPublisher()
+    }
+    
     private var balanceTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 24)
@@ -179,8 +184,7 @@ class WalletViewController: UIViewController {
     }
 
     @objc private func didTapAddTransaction() {
-//        let transactionVC = AddTransactionViewController(viewModel: viewModel)
-//        navigationController?.pushViewController(transactionVC, animated: true)
+        addTransactionSubject.send(())
     }
 }
 
