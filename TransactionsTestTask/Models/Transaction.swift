@@ -19,11 +19,3 @@ struct Transaction {
         self.date = entity.date ?? .now
     }
 }
-
-enum TransactionCategory: String, CaseIterable {
-    case deposit, groceries, taxi, electronics, restaurant, other
-    
-    var title: String {
-        rawValue.capitalized
-    }
-}

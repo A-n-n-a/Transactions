@@ -10,7 +10,7 @@ import CoreData
 import Foundation
 
 protocol StorageService {
-    func fetchTransactions() -> AnyPublisher<[Transaction], Never>
+    func fetchTransactions() -> AnyPublisher<[String: [Transaction]], Never>
     func fetchWalletBalance() -> AnyPublisher<Double, Never>
     func addTransaction(amount: Double, category: TransactionCategory) -> AnyPublisher<Void, Error>
     func updateWalletBalance(amount: Double) -> AnyPublisher<Void, Error>
@@ -33,19 +33,28 @@ final class CoreDataService: StorageService {
         container.viewContext
     }
     
-    func fetchTransactions() -> AnyPublisher<[Transaction], Never> {
-        
-        let request: NSFetchRequest<TransactionEntity> = TransactionEntity.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+    func fetchTransactions() -> AnyPublisher<[String: [Transaction]], Never> {
+        Future { promise in
+            let request: NSFetchRequest<TransactionEntity> = TransactionEntity.fetchRequest()
+            request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
 
-        do {
-            let result = try context.fetch(request)
-            let transactions = result.map { Transaction(entity: $0) }
-            return Just(transactions).eraseToAnyPublisher()
-        } catch {
-            print("Failed to fetch transactions: \(error)")
-            return Just([]).eraseToAnyPublisher()
+            do {
+                let result = try self.context.fetch(request)
+                let transactions = result.map { Transaction(entity: $0) }
+
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd-MM-yyyy"
+                let groupedTransactions = Dictionary(grouping: transactions) { transaction in
+                    return dateFormatter.string(from: transaction.date)
+                }
+
+                promise(.success(groupedTransactions))
+            } catch {
+                print("Failed to fetch transactions: \(error)")
+                promise(.success([:]))
+            }
         }
+        .eraseToAnyPublisher()
     }
     
     func fetchWalletBalance() -> AnyPublisher<Double, Never> {

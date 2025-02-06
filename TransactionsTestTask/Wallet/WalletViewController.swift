@@ -98,7 +98,7 @@ class WalletViewController: UIViewController {
         addFundsButton.addTarget(self, action: #selector(didTapAddFunds), for: .touchUpInside)
         addTransactionButton.addTarget(self, action: #selector(didTapAddTransaction), for: .touchUpInside)
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TransactionCell")
+        tableView.register(TransactionCell.self, forCellReuseIdentifier: "TransactionCell")
         tableView.dataSource = self
         tableView.delegate = self
         
@@ -142,7 +142,7 @@ class WalletViewController: UIViewController {
         viewModel.$balance
             .receive(on: DispatchQueue.main)
             .sink { [weak self] balance in
-                self?.balanceLabel.text = "\(balance.btcFormated()) BTC"
+                self?.balanceLabel.text = "\(balance.btcFormatted()) BTC"
             }
             .store(in: &cancellables)
 
@@ -153,9 +153,9 @@ class WalletViewController: UIViewController {
             }
             .store(in: &cancellables)
 
-        viewModel.$transactions
+        viewModel.$transactionsByDate
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] transactions in
+            .sink { [weak self] _ in
                 self?.tableView.reloadData()
             }
             .store(in: &cancellables)
@@ -185,16 +185,28 @@ class WalletViewController: UIViewController {
 }
 
 extension WalletViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel.numberOfSections()
+    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.transactions.count
+        return viewModel.numberOfRows(in: section)
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let transaction = viewModel.transactions[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TransactionCell", for: indexPath)
-        cell.textLabel?.text = "\(transaction.category.title) - \(transaction.amount.btcFormated()) BTC"
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TransactionCell", for: indexPath) as! TransactionCell
+        let transaction = viewModel.transaction(for: indexPath)
+        cell.configure(with: transaction)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return viewModel.titleForHeader(in: section)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 48
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -27,6 +27,8 @@
 		95EBC01E2D53D9420019E90C /* WalletCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC01D2D53D9420019E90C /* WalletCoordinator.swift */; };
 		95EBC0222D54A8200019E90C /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0212D54A8200019E90C /* Wallet.swift */; };
 		95EBC0242D54F7840019E90C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0232D54F7840019E90C /* Extensions.swift */; };
+		95EBC0262D5511180019E90C /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0252D5511180019E90C /* Category.swift */; };
+		95EBC0292D5512DF0019E90C /* TransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0282D5512DF0019E90C /* TransactionCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +73,8 @@
 		95EBC01D2D53D9420019E90C /* WalletCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCoordinator.swift; sourceTree = "<group>"; };
 		95EBC0212D54A8200019E90C /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
 		95EBC0232D54F7840019E90C /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		95EBC0252D5511180019E90C /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		95EBC0282D5512DF0019E90C /* TransactionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +180,7 @@
 		95EBC01F2D54A7D40019E90C /* Wallet */ = {
 			isa = PBXGroup;
 			children = (
+				95EBC0272D5512D20019E90C /* Cells */,
 				95EBC01D2D53D9420019E90C /* WalletCoordinator.swift */,
 				1CA3B6592D22B0F500176711 /* WalletViewController.swift */,
 				95EBC0152D53C4AE0019E90C /* WalletViewModel.swift */,
@@ -188,8 +193,17 @@
 			children = (
 				95EBC0192D53D0B20019E90C /* Transaction.swift */,
 				95EBC0212D54A8200019E90C /* Wallet.swift */,
+				95EBC0252D5511180019E90C /* Category.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		95EBC0272D5512D20019E90C /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				95EBC0282D5512DF0019E90C /* TransactionCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -334,8 +348,10 @@
 				1CA3B65A2D22B0F500176711 /* WalletViewController.swift in Sources */,
 				95EBC0162D53C4AE0019E90C /* WalletViewModel.swift in Sources */,
 				1CA3B6562D22B0F500176711 /* AppDelegate.swift in Sources */,
+				95EBC0262D5511180019E90C /* Category.swift in Sources */,
 				95EBC0242D54F7840019E90C /* Extensions.swift in Sources */,
 				1CA3B6582D22B0F500176711 /* SceneDelegate.swift in Sources */,
+				95EBC0292D5512DF0019E90C /* TransactionCell.swift in Sources */,
 				1CA3B6602D22B0F500176711 /* TransactionsTestTask.xcdatamodeld in Sources */,
 				0DF1D1402D22DC51001626E7 /* ServicesAssembler.swift in Sources */,
 				95EBC01E2D53D9420019E90C /* WalletCoordinator.swift in Sources */,
