@@ -31,5 +31,13 @@ class AddTransactionViewModel {
         isAmountValid = true
         
         return storageService.addTransaction(amount: amount, category: selectedCategory)
+            .flatMap { [weak self] in
+                self?.updateWalletBalance(amount: amount) ?? Fail(error: NSError(domain: "", code: 0, userInfo: nil)).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func updateWalletBalance(amount: Double) -> AnyPublisher<Void, Error> {
+        return storageService.updateWalletBalance(amount: -amount)
     }
 }
