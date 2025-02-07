@@ -78,6 +78,11 @@ class AddTransactionViewController: UIViewController {
         bindViewModel()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    
     private func setupUI() {
         view.backgroundColor = .white
         categoryPicker.dataSource = self
