@@ -16,10 +16,12 @@ import Combine
 
 enum ServicesAssembler {
     
-    // MARK: - BitcoinRateService
+    // MARK: - NetworkService
+    static let networkService: NetworkServiceProtocol = NetworkService()
     
+    // MARK: - BitcoinRateService
     static let bitcoinRateService: RateService = {
-        let service = BitcoinRateService()
+        let service = BitcoinRateService(networkService: networkService)
         let analyticsService = Self.analyticsService
 
         service.ratePublisher
@@ -35,11 +37,11 @@ enum ServicesAssembler {
     }()
     
     // MARK: - AnalyticsService
-    
     static let analyticsService: AnalyticsService = {
         return AnalyticsServiceImpl()
     }()
     
+    // MARK: - StorageService
     static let storageService: StorageService = {
         return CoreDataService()
     }()

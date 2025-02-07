@@ -25,13 +25,13 @@
 		95EBC01A2D53D0B20019E90C /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0192D53D0B20019E90C /* Transaction.swift */; };
 		95EBC01C2D53D2540019E90C /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC01B2D53D2540019E90C /* CoreDataService.swift */; };
 		95EBC01E2D53D9420019E90C /* WalletCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC01D2D53D9420019E90C /* WalletCoordinator.swift */; };
-		95EBC0222D54A8200019E90C /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0212D54A8200019E90C /* Wallet.swift */; };
 		95EBC0242D54F7840019E90C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0232D54F7840019E90C /* Extensions.swift */; };
 		95EBC0262D5511180019E90C /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0252D5511180019E90C /* Category.swift */; };
 		95EBC0292D5512DF0019E90C /* TransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0282D5512DF0019E90C /* TransactionCell.swift */; };
 		95EBC02C2D551BCB0019E90C /* AddTransactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC02B2D551BCB0019E90C /* AddTransactionViewModel.swift */; };
 		95EBC02E2D551BE40019E90C /* AddTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC02D2D551BE40019E90C /* AddTransactionViewController.swift */; };
 		95EBC0302D551C000019E90C /* AddTransactionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC02F2D551C000019E90C /* AddTransactionCoordinator.swift */; };
+		95EBC0322D55D8B20019E90C /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0312D55D8B20019E90C /* NetworkService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,13 +74,13 @@
 		95EBC0192D53D0B20019E90C /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		95EBC01B2D53D2540019E90C /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
 		95EBC01D2D53D9420019E90C /* WalletCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCoordinator.swift; sourceTree = "<group>"; };
-		95EBC0212D54A8200019E90C /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
 		95EBC0232D54F7840019E90C /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		95EBC0252D5511180019E90C /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		95EBC0282D5512DF0019E90C /* TransactionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCell.swift; sourceTree = "<group>"; };
 		95EBC02B2D551BCB0019E90C /* AddTransactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionViewModel.swift; sourceTree = "<group>"; };
 		95EBC02D2D551BE40019E90C /* AddTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionViewController.swift; sourceTree = "<group>"; };
 		95EBC02F2D551C000019E90C /* AddTransactionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionCoordinator.swift; sourceTree = "<group>"; };
+		95EBC0312D55D8B20019E90C /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +122,7 @@
 			children = (
 				0DF1D1412D22DCC3001626E7 /* Helpers */,
 				0DF1D13F2D22DC4B001626E7 /* ServicesAssembler.swift */,
+				95EBC0312D55D8B20019E90C /* NetworkService.swift */,
 				95EBC01B2D53D2540019E90C /* CoreDataService.swift */,
 				0DF1D1442D22DCFF001626E7 /* BitcoinRateService.swift */,
 				0D15405F2D22EF3400D6D63F /* AnalyticsService */,
@@ -133,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				0DF1D1422D22DCD2001626E7 /* PerformOnce.swift */,
+				95EBC0232D54F7840019E90C /* Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -166,7 +168,6 @@
 				95EBC01F2D54A7D40019E90C /* Wallet */,
 				95EBC02A2D551BA50019E90C /* AddTransaction */,
 				95EBC0202D54A7F90019E90C /* Models */,
-				95EBC0232D54F7840019E90C /* Extensions.swift */,
 				1CA3B65B2D22B0F500176711 /* Main.storyboard */,
 				1CA3B6612D22B0F600176711 /* Assets.xcassets */,
 				1CA3B6632D22B0F600176711 /* LaunchScreen.storyboard */,
@@ -199,7 +200,6 @@
 			isa = PBXGroup;
 			children = (
 				95EBC0192D53D0B20019E90C /* Transaction.swift */,
-				95EBC0212D54A8200019E90C /* Wallet.swift */,
 				95EBC0252D5511180019E90C /* Category.swift */,
 			);
 			path = Models;
@@ -354,7 +354,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				95EBC0222D54A8200019E90C /* Wallet.swift in Sources */,
+				95EBC0322D55D8B20019E90C /* NetworkService.swift in Sources */,
 				0D1540612D22EF5D00D6D63F /* AnalyticsEvent.swift in Sources */,
 				0DF1D1432D22DCD8001626E7 /* PerformOnce.swift in Sources */,
 				95EBC0142D53C47C0019E90C /* AppCoordinator.swift in Sources */,
