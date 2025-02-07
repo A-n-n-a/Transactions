@@ -128,7 +128,7 @@ class WalletViewController: UIViewController {
             bitcoinRateLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
             bitcoinRateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             
-            addFundsButton.leadingAnchor.constraint(equalTo: labelsStack.trailingAnchor, constant: 10),
+            addFundsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             addFundsButton.centerYAnchor.constraint(equalTo: labelsStack.centerYAnchor),
             addFundsButton.heightAnchor.constraint(equalToConstant: 44),
             addFundsButton.widthAnchor.constraint(equalToConstant: 44),
