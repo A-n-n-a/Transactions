@@ -64,7 +64,7 @@ final class WalletViewModel {
         storageService.addTransaction(amount: amount, category: .deposit)
             .sink(receiveCompletion: { [weak self] completion in
                 if case .failure(let error) = completion {
-                    self?.errorSubject.send("Error saving deposit: \(error)")
+                    self?.errorSubject.send("Error saving deposit")
                 }
             }, receiveValue: { [weak self] in
                 self?.loadTransactions()

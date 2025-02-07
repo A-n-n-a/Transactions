@@ -18,4 +18,10 @@ struct Transaction {
         self.category = TransactionCategory(rawValue: entity.category ?? "other") ?? .other
         self.date = entity.date ?? .now
     }
+    
+    init(amount: Double, category: TransactionCategory, date: Date) {
+        self.amount = amount
+        self.category = category
+        self.date = date
+    }
 }

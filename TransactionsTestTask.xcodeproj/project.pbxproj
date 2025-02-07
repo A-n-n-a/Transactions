@@ -19,7 +19,6 @@
 		1CA3B6602D22B0F500176711 /* TransactionsTestTask.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1CA3B65E2D22B0F500176711 /* TransactionsTestTask.xcdatamodeld */; };
 		1CA3B6622D22B0F600176711 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CA3B6612D22B0F600176711 /* Assets.xcassets */; };
 		1CA3B6652D22B0F600176711 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 1CA3B6642D22B0F600176711 /* Base */; };
-		1CA3B6702D22B0F600176711 /* TransactionsTestTaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA3B66F2D22B0F600176711 /* TransactionsTestTaskTests.swift */; };
 		95EBC0142D53C47C0019E90C /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0132D53C47C0019E90C /* AppCoordinator.swift */; };
 		95EBC0162D53C4AE0019E90C /* WalletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0152D53C4AE0019E90C /* WalletViewModel.swift */; };
 		95EBC01A2D53D0B20019E90C /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0192D53D0B20019E90C /* Transaction.swift */; };
@@ -34,6 +33,11 @@
 		95EBC0322D55D8B20019E90C /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0312D55D8B20019E90C /* NetworkService.swift */; };
 		95EBC0342D55D9A90019E90C /* Rates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0332D55D9A90019E90C /* Rates.swift */; };
 		95EBC0372D55E8720019E90C /* TextFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0362D55E8720019E90C /* TextFieldValidator.swift */; };
+		95EBC0392D5621B70019E90C /* AddTransactionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0382D5621B70019E90C /* AddTransactionViewModelTests.swift */; };
+		95EBC03B2D56229D0019E90C /* MockStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC03A2D56229D0019E90C /* MockStorageService.swift */; };
+		95EBC03D2D5623590019E90C /* MockAnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC03C2D5623590019E90C /* MockAnalyticsService.swift */; };
+		95EBC0402D5623BA0019E90C /* MockRateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC03F2D5623BA0019E90C /* MockRateService.swift */; };
+		95EBC0422D5625E30019E90C /* WalletViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0412D5625E30019E90C /* WalletViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,7 +73,6 @@
 		1CA3B6642D22B0F600176711 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1CA3B6662D22B0F600176711 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1CA3B66B2D22B0F600176711 /* TransactionsTestTaskTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TransactionsTestTaskTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		1CA3B66F2D22B0F600176711 /* TransactionsTestTaskTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsTestTaskTests.swift; sourceTree = "<group>"; };
 		1CA3B6752D22B0F600176711 /* TransactionsTestTaskUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TransactionsTestTaskUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		95EBC0132D53C47C0019E90C /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		95EBC0152D53C4AE0019E90C /* WalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewModel.swift; sourceTree = "<group>"; };
@@ -85,6 +88,11 @@
 		95EBC0312D55D8B20019E90C /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		95EBC0332D55D9A90019E90C /* Rates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rates.swift; sourceTree = "<group>"; };
 		95EBC0362D55E8720019E90C /* TextFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldValidator.swift; sourceTree = "<group>"; };
+		95EBC0382D5621B70019E90C /* AddTransactionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionViewModelTests.swift; sourceTree = "<group>"; };
+		95EBC03A2D56229D0019E90C /* MockStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockStorageService.swift; sourceTree = "<group>"; };
+		95EBC03C2D5623590019E90C /* MockAnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAnalyticsService.swift; sourceTree = "<group>"; };
+		95EBC03F2D5623BA0019E90C /* MockRateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRateService.swift; sourceTree = "<group>"; };
+		95EBC0412D5625E30019E90C /* WalletViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,7 +192,9 @@
 		1CA3B66E2D22B0F600176711 /* TransactionsTestTaskTests */ = {
 			isa = PBXGroup;
 			children = (
-				1CA3B66F2D22B0F600176711 /* TransactionsTestTaskTests.swift */,
+				95EBC0412D5625E30019E90C /* WalletViewModelTests.swift */,
+				95EBC0382D5621B70019E90C /* AddTransactionViewModelTests.swift */,
+				95EBC03E2D5623880019E90C /* Mocks */,
 			);
 			path = TransactionsTestTaskTests;
 			sourceTree = "<group>";
@@ -235,6 +245,16 @@
 				95EBC01B2D53D2540019E90C /* CoreDataService.swift */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		95EBC03E2D5623880019E90C /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				95EBC03A2D56229D0019E90C /* MockStorageService.swift */,
+				95EBC03C2D5623590019E90C /* MockAnalyticsService.swift */,
+				95EBC03F2D5623BA0019E90C /* MockRateService.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -398,7 +418,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1CA3B6702D22B0F600176711 /* TransactionsTestTaskTests.swift in Sources */,
+				95EBC03D2D5623590019E90C /* MockAnalyticsService.swift in Sources */,
+				95EBC0402D5623BA0019E90C /* MockRateService.swift in Sources */,
+				95EBC0392D5621B70019E90C /* AddTransactionViewModelTests.swift in Sources */,
+				95EBC03B2D56229D0019E90C /* MockStorageService.swift in Sources */,
+				95EBC0422D5625E30019E90C /* WalletViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -626,7 +650,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.obrio.TransactionsTestTaskTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -644,7 +668,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.obrio.TransactionsTestTaskTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
