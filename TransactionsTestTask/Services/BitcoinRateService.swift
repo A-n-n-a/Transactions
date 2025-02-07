@@ -21,18 +21,22 @@ final class BitcoinRateService: RateService {
     
     private var cancellables = Set<AnyCancellable>()
     private let networkService: NetworkServiceProtocol
-    
+    private let storageService: StorageService
+
     private let rateSubject = PassthroughSubject<Double, Never>()
     var ratePublisher: AnyPublisher<Double, Never> {
         rateSubject.eraseToAnyPublisher()
     }
 
-    init(networkService: NetworkServiceProtocol) {
+    init(networkService: NetworkServiceProtocol, storageService: StorageService) {
         self.networkService = networkService
+        self.storageService = storageService
         fetchRatePeriodically()
     }
 
     private func fetchRatePeriodically() {
+        fetchRate()
+
         Timer.publish(every: 60, on: .main, in: .common)
             .autoconnect()
             .sink { [weak self] _ in
@@ -46,7 +50,13 @@ final class BitcoinRateService: RateService {
 
         networkService.request(url: url)
             .map { (response: BitcoinRateResponse) in response.bpi["USD"]?.rate ?? 0.0 }
-            .replaceError(with: 0.0)
+            .handleEvents(receiveOutput: { [weak self] newRate in
+                self?.storageService.saveBitcoinRate(newRate)
+            })
+            .catch { [weak self] _ -> AnyPublisher<Double, Never> in
+                let lastSavedRate = self?.storageService.getLastBitcoinRate() ?? 0.0
+                return Just(lastSavedRate).eraseToAnyPublisher()
+            }
             .sink { [weak self] newRate in
                 self?.rateSubject.send(newRate)
             }

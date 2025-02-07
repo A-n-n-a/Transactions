@@ -21,7 +21,7 @@ enum ServicesAssembler {
     
     // MARK: - BitcoinRateService
     static let bitcoinRateService: RateService = {
-        let service = BitcoinRateService(networkService: networkService)
+        let service = BitcoinRateService(networkService: networkService, storageService: storageService)
         let analyticsService = Self.analyticsService
 
         service.ratePublisher

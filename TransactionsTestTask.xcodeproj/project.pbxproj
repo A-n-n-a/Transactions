@@ -125,7 +125,7 @@
 				0DF1D1412D22DCC3001626E7 /* Helpers */,
 				0DF1D13F2D22DC4B001626E7 /* ServicesAssembler.swift */,
 				95EBC0312D55D8B20019E90C /* NetworkService.swift */,
-				95EBC01B2D53D2540019E90C /* CoreDataService.swift */,
+				95EBC0352D55DDA80019E90C /* CoreData */,
 				0DF1D1442D22DCFF001626E7 /* BitcoinRateService.swift */,
 				0D15405F2D22EF3400D6D63F /* AnalyticsService */,
 			);
@@ -174,7 +174,6 @@
 				1CA3B6612D22B0F600176711 /* Assets.xcassets */,
 				1CA3B6632D22B0F600176711 /* LaunchScreen.storyboard */,
 				1CA3B6662D22B0F600176711 /* Info.plist */,
-				1CA3B65E2D22B0F500176711 /* TransactionsTestTask.xcdatamodeld */,
 			);
 			path = TransactionsTestTask;
 			sourceTree = "<group>";
@@ -224,6 +223,15 @@
 				95EBC02B2D551BCB0019E90C /* AddTransactionViewModel.swift */,
 			);
 			path = AddTransaction;
+			sourceTree = "<group>";
+		};
+		95EBC0352D55DDA80019E90C /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				1CA3B65E2D22B0F500176711 /* TransactionsTestTask.xcdatamodeld */,
+				95EBC01B2D53D2540019E90C /* CoreDataService.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
