@@ -12,6 +12,7 @@ final class WalletViewModel {
     
     private let storageService: StorageService
     private let rateService: RateService
+    private let analyticsService: AnalyticsService
     private var cancellables = Set<AnyCancellable>()
     private(set) var sortedDates: [Date] = []
     
@@ -24,9 +25,10 @@ final class WalletViewModel {
         errorSubject.eraseToAnyPublisher()
     }
     
-    init(storageService: StorageService, rateService: RateService) {
+    init(storageService: StorageService, rateService: RateService, analyticsService: AnalyticsService) {
         self.storageService = storageService
         self.rateService = rateService
+        self.analyticsService = analyticsService
         rateService.ratePublisher
             .assign(to: \.bitcoinRate, on: self)
             .store(in: &cancellables)
@@ -39,6 +41,8 @@ final class WalletViewModel {
     }
     
     func loadTransactions() {
+        trackEvent(name: AnalyticsEvent.Name.loadTransactions)
+        
         storageService.fetchTransactions()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] transactions in
@@ -54,19 +58,9 @@ final class WalletViewModel {
             .store(in: &cancellables)
     }
     
-    func addTransaction(amount: Double, category: TransactionCategory) {
-        storageService.addTransaction(amount: amount, category: category)
-            .sink(receiveCompletion: { [weak self] completion in
-                if case .failure(let error) = completion {
-                    self?.errorSubject.send("Error saving transaction: \(error)")
-                }
-            }, receiveValue: { [weak self] in
-                self?.loadTransactions()
-            })
-            .store(in: &cancellables)
-    }
-    
     func addFunds(amount: Double) {
+        trackEvent(name: AnalyticsEvent.Name.addDeposit, parameters: [AnalyticsEvent.Key.amount: amount.btcFormatted()])
+        
         storageService.addTransaction(amount: amount, category: .deposit)
             .sink(receiveCompletion: { [weak self] completion in
                 if case .failure(let error) = completion {
@@ -81,6 +75,8 @@ final class WalletViewModel {
     }
     
     func updateWalletBalance(amount: Double) {
+        trackEvent(name: AnalyticsEvent.Name.updateBalance, parameters: [AnalyticsEvent.Key.amount: amount.btcFormatted()])
+        
         storageService.updateWalletBalance(amount: amount)
             .sink(receiveCompletion: { [weak self] completion in
                 if case .failure(let error) = completion {
@@ -106,5 +102,9 @@ final class WalletViewModel {
 
     func titleForHeader(in section: Int) -> String {
         return sortedDates[section].headerFormattedDate()
+    }
+    
+    private func trackEvent(name: String, parameters: [String: String] = [:]) {
+        analyticsService.trackEvent(name: name, parameters: parameters)
     }
 }

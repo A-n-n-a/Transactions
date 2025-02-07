@@ -13,6 +13,7 @@ final class AppCoordinator {
     private let navigationController: UINavigationController
     private let coreDataService = ServicesAssembler.storageService
     private let bitcoinRateService = ServicesAssembler.bitcoinRateService
+    private let analyticsService = ServicesAssembler.analyticsService
 
     init(window: UIWindow, navigationController: UINavigationController) {
         self.window = window
@@ -21,7 +22,7 @@ final class AppCoordinator {
 
     func start() {
         
-        let walletCoordinator = WalletCoordinator(navigationController: navigationController, storageService: coreDataService, rateService: bitcoinRateService)
+        let walletCoordinator = WalletCoordinator(navigationController: navigationController, storageService: coreDataService, rateService: bitcoinRateService, analyticsService: analyticsService)
         walletCoordinator.start()
 
         window.rootViewController = navigationController

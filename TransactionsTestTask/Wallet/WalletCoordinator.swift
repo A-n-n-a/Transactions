@@ -13,16 +13,18 @@ final class WalletCoordinator {
     private let navigationController: UINavigationController
     private let storageService: StorageService
     private let rateService: RateService
+    private let analyticsService: AnalyticsService
     private var cancellables = Set<AnyCancellable>()
 
-    init(navigationController: UINavigationController, storageService: StorageService, rateService: RateService) {
+    init(navigationController: UINavigationController, storageService: StorageService, rateService: RateService, analyticsService: AnalyticsService) {
         self.navigationController = navigationController
         self.storageService = storageService
         self.rateService = rateService
+        self.analyticsService = analyticsService
     }
 
     func start() {
-        let walletViewModel = WalletViewModel(storageService: storageService, rateService: rateService)
+        let walletViewModel = WalletViewModel(storageService: storageService, rateService: rateService, analyticsService: analyticsService)
         let walletVC = WalletViewController(viewModel: walletViewModel)
         
         walletVC.addTransactionPublisher
@@ -36,7 +38,7 @@ final class WalletCoordinator {
     }
     
     func showAddTransactionScreen(balance: Double) {
-        let addTransactionCoordinator = AddTransactionCoordinator(navigationController: navigationController, storageService: storageService, balance: balance)
+        let addTransactionCoordinator = AddTransactionCoordinator(navigationController: navigationController, storageService: storageService, analyticsService: analyticsService, balance: balance)
         addTransactionCoordinator.start()
     }
 }
