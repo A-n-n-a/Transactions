@@ -56,9 +56,9 @@ class AddTransactionViewController: UIViewController {
     private let errorLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18)
-        label.textAlignment = .right
+        label.textAlignment = .center
         label.textColor = .red
-        label.text = "Please enter a valid amount"
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -117,15 +117,26 @@ class AddTransactionViewController: UIViewController {
     
     private func bindViewModel() {
         
-        viewModel.$isAmountValid
+        viewModel.$isInputValid
             .sink { [weak self] isValid in
+                if !isValid {
+                    self?.errorLabel.text = "Please enter a valid amount"
+                }
                 self?.errorLabel.isHidden = isValid
             }
             .store(in: &cancellables)
     }
     
     @objc private func addTransactionButtonTapped() {
-        viewModel.addTransaction(amountString: amountTextField.text)
+        
+        let amount = amountTextField.text
+        guard viewModel.isTransactionAmountValid(amountString: amount) else {
+            errorLabel.text = "Insufficient funds. \nYour current balance is \(viewModel.balance)"
+            errorLabel.isHidden = false
+            return
+        }
+        
+        viewModel.addTransaction(amountString: amount)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .failure(let error):

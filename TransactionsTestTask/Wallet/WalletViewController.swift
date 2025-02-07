@@ -13,8 +13,8 @@ class WalletViewController: UIViewController {
     private var cancellables = Set<AnyCancellable>()
     private let textFieldValidator = TextFieldValidator()
     
-    private let addTransactionSubject = PassthroughSubject<Void, Never>()
-    var addTransactionPublisher: AnyPublisher<Void, Never> {
+    private let addTransactionSubject = PassthroughSubject<Double, Never>()
+    var addTransactionPublisher: AnyPublisher<Double, Never> {
         addTransactionSubject.eraseToAnyPublisher()
     }
     
@@ -187,7 +187,7 @@ class WalletViewController: UIViewController {
     }
 
     @objc private func didTapAddTransaction() {
-        addTransactionSubject.send(())
+        addTransactionSubject.send((viewModel.balance))
     }
 }
 

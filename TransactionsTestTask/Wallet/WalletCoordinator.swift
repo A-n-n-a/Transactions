@@ -27,16 +27,16 @@ final class WalletCoordinator {
         
         walletVC.addTransactionPublisher
             .receive(on: DispatchQueue.main)
-            .sink { _ in
-                self.showAddTransactionScreen()
+            .sink { balance in
+                self.showAddTransactionScreen(balance: balance)
             }
             .store(in: &cancellables)
 
         navigationController.pushViewController(walletVC, animated: true)
     }
     
-    func showAddTransactionScreen() {
-        let addTransactionCoordinator = AddTransactionCoordinator(navigationController: navigationController, storageService: storageService)
+    func showAddTransactionScreen(balance: Double) {
+        let addTransactionCoordinator = AddTransactionCoordinator(navigationController: navigationController, storageService: storageService, balance: balance)
         addTransactionCoordinator.start()
     }
 }

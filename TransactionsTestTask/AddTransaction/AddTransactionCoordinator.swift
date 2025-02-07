@@ -13,15 +13,17 @@ class AddTransactionCoordinator {
     
     private let navigationController: UINavigationController
     private let storageService: StorageService
+    private let balance: Double
     private var cancellables = Set<AnyCancellable>()
     
-    init(navigationController: UINavigationController, storageService: StorageService) {
+    init(navigationController: UINavigationController, storageService: StorageService, balance: Double) {
         self.navigationController = navigationController
         self.storageService = storageService
+        self.balance = balance
     }
     
     func start() {
-        let viewModel = AddTransactionViewModel(storageService: storageService)
+        let viewModel = AddTransactionViewModel(storageService: storageService, balance: balance)
         let addTransactionVC = AddTransactionViewController(viewModel: viewModel)
         
         addTransactionVC.addTransactionPublisher
