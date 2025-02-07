@@ -166,6 +166,13 @@ class WalletViewController: UIViewController {
                 self?.tableView.reloadData()
             }
             .store(in: &cancellables)
+        
+        viewModel.errorPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] errorMessage in
+                self?.showErrorAlert(message: errorMessage)
+            }
+            .store(in: &cancellables)
     }
 
     

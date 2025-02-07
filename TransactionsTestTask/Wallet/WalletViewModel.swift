@@ -19,6 +19,11 @@ final class WalletViewModel {
     @Published private(set) var bitcoinRate = 0.0
     @Published private(set) var transactionsByDate: [Date: [Transaction]] = [:]
     
+    private let errorSubject = PassthroughSubject<String, Never>()
+    var errorPublisher: AnyPublisher<String, Never> {
+        errorSubject.eraseToAnyPublisher()
+    }
+    
     init(storageService: StorageService, rateService: RateService) {
         self.storageService = storageService
         self.rateService = rateService
@@ -51,10 +56,9 @@ final class WalletViewModel {
     
     func addTransaction(amount: Double, category: TransactionCategory) {
         storageService.addTransaction(amount: amount, category: category)
-            .sink(receiveCompletion: { completion in
+            .sink(receiveCompletion: { [weak self] completion in
                 if case .failure(let error) = completion {
-                    //TODO: show error alert
-                    print("Error saving transaction: \(error)")
+                    self?.errorSubject.send("Error saving transaction: \(error)")
                 }
             }, receiveValue: { [weak self] in
                 self?.loadTransactions()
@@ -64,10 +68,9 @@ final class WalletViewModel {
     
     func addFunds(amount: Double) {
         storageService.addTransaction(amount: amount, category: .deposit)
-            .sink(receiveCompletion: { completion in
+            .sink(receiveCompletion: { [weak self] completion in
                 if case .failure(let error) = completion {
-                    //TODO: show error alert
-                    print("Error saving transaction: \(error)")
+                    self?.errorSubject.send("Error saving deposit: \(error)")
                 }
             }, receiveValue: { [weak self] in
                 self?.loadTransactions()
@@ -79,10 +82,9 @@ final class WalletViewModel {
     
     func updateWalletBalance(amount: Double) {
         storageService.updateWalletBalance(amount: amount)
-            .sink(receiveCompletion: { completion in
+            .sink(receiveCompletion: { [weak self] completion in
                 if case .failure(let error) = completion {
-                    //TODO: show error alert
-                    print("Error saving transaction: \(error)")
+                    self?.errorSubject.send("Error updating wallet balance: \(error)")
                 }
             }, receiveValue: {})
             .store(in: &cancellables)

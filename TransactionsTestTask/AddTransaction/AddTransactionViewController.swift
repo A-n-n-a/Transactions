@@ -137,14 +137,13 @@ class AddTransactionViewController: UIViewController {
         }
         
         viewModel.addTransaction(amountString: amount)
-            .sink(receiveCompletion: { completion in
+            .sink(receiveCompletion: { [weak self] completion in
                 switch completion {
                 case .failure(let error):
-                    //TODO: handle error
-                    print("Failed to add transaction: \(error.localizedDescription)")
+                    self?.showErrorAlert(message: "Failed to add transaction: \(error.localizedDescription)")
                 case .finished:
-                    self.addTransactionSubject.send(())
-                    self.navigationController?.popViewController(animated: true)
+                    self?.addTransactionSubject.send(())
+                    self?.navigationController?.popViewController(animated: true)
                 }
             }, receiveValue: { _ in })
             .store(in: &cancellables)

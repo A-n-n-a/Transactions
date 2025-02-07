@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension Double {
     
@@ -53,5 +54,18 @@ extension Date {
             Date.dateFormatter.dateFormat = "dd-MM-yyyy"
             return Date.dateFormatter.string(from: self)
         }
+    }
+}
+
+extension UIViewController {
+    
+    func showErrorAlert(title: String = "Error", message: String, actionTitle: String = "OK", handler: ((UIAlertAction) -> Void)? = nil) {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: actionTitle, style: .default, handler: handler)
+        alertController.addAction(action)
+        
+        self.present(alertController, animated: true, completion: nil)
     }
 }
