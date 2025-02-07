@@ -34,6 +34,10 @@ extension Date {
         return Date.dateFormatter.string(from: self)
     }
     
+    func getDay() -> Date {
+        return Calendar.current.startOfDay(for: self)
+    }
+    
     func headerFormattedDate() -> String {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: Date())

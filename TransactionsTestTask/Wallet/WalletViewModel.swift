@@ -13,11 +13,11 @@ final class WalletViewModel {
     private let storageService: StorageService
     private let rateService: RateService
     private var cancellables = Set<AnyCancellable>()
-    private(set) var sortedDates: [String] = []
+    private(set) var sortedDates: [Date] = []
     
     @Published private(set) var balance = 0.0
     @Published private(set) var bitcoinRate = 0.0
-    @Published private(set) var transactionsByDate: [String: [Transaction]] = [:]
+    @Published private(set) var transactionsByDate: [Date: [Transaction]] = [:]
     
     init(storageService: StorageService, rateService: RateService) {
         self.storageService = storageService
@@ -39,14 +39,12 @@ final class WalletViewModel {
             .sink { [weak self] transactions in
                 guard let self = self else { return }
                 
-                let sortedTransactions = transactions.sorted { $0.date > $1.date }
-                
-                let groupedTransactions = Dictionary(grouping: sortedTransactions) { transaction in
-                    return transaction.date.headerFormattedDate()
+                let groupedTransactions = Dictionary(grouping: transactions) { transaction in
+                    return transaction.date.getDay()
                 }
                 
                 self.transactionsByDate = groupedTransactions
-                self.sortedDates = Array(groupedTransactions.keys)
+                self.sortedDates = groupedTransactions.keys.sorted(by: >)
             }
             .store(in: &cancellables)
     }
@@ -105,6 +103,6 @@ final class WalletViewModel {
     }
 
     func titleForHeader(in section: Int) -> String {
-        return sortedDates[section] 
+        return sortedDates[section].headerFormattedDate()
     }
 }
