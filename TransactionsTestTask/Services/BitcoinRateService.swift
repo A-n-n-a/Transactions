@@ -15,7 +15,6 @@ import Foundation
 
 protocol RateService {
     var ratePublisher: AnyPublisher<Double, Never> { get }
-    func fetchRate()
 }
 
 final class BitcoinRateService: RateService {
@@ -30,9 +29,19 @@ final class BitcoinRateService: RateService {
 
     init(networkService: NetworkServiceProtocol) {
         self.networkService = networkService
+        fetchRatePeriodically()
     }
 
-    func fetchRate() {
+    private func fetchRatePeriodically() {
+        Timer.publish(every: 60, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] _ in
+                self?.fetchRate()
+            }
+            .store(in: &cancellables)
+    }
+
+    private func fetchRate() {
         guard let url = URL(string: "https://api.coindesk.com/v1/bpi/currentprice.json") else { return }
 
         networkService.request(url: url)
@@ -42,21 +51,5 @@ final class BitcoinRateService: RateService {
                 self?.rateSubject.send(newRate)
             }
             .store(in: &cancellables)
-    }
-}
-
-struct BitcoinRateResponse: Decodable {
-    let bpi: [String: CurrencyRate]
-    
-    var usdRate: Double? {
-        return bpi["USD"]?.rate
-    }
-}
-
-struct CurrencyRate: Decodable {
-    let rate: Double
-    
-    enum CodingKeys: String, CodingKey {
-        case rate = "rate_float"
     }
 }

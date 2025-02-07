@@ -32,6 +32,7 @@
 		95EBC02E2D551BE40019E90C /* AddTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC02D2D551BE40019E90C /* AddTransactionViewController.swift */; };
 		95EBC0302D551C000019E90C /* AddTransactionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC02F2D551C000019E90C /* AddTransactionCoordinator.swift */; };
 		95EBC0322D55D8B20019E90C /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0312D55D8B20019E90C /* NetworkService.swift */; };
+		95EBC0342D55D9A90019E90C /* Rates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0332D55D9A90019E90C /* Rates.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		95EBC02D2D551BE40019E90C /* AddTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionViewController.swift; sourceTree = "<group>"; };
 		95EBC02F2D551C000019E90C /* AddTransactionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionCoordinator.swift; sourceTree = "<group>"; };
 		95EBC0312D55D8B20019E90C /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		95EBC0332D55D9A90019E90C /* Rates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rates.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -201,6 +203,7 @@
 			children = (
 				95EBC0192D53D0B20019E90C /* Transaction.swift */,
 				95EBC0252D5511180019E90C /* Category.swift */,
+				95EBC0332D55D9A90019E90C /* Rates.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -363,6 +366,7 @@
 				95EBC01C2D53D2540019E90C /* CoreDataService.swift in Sources */,
 				95EBC02E2D551BE40019E90C /* AddTransactionViewController.swift in Sources */,
 				0DF1D1472D22DD4A001626E7 /* AnalyticsService.swift in Sources */,
+				95EBC0342D55D9A90019E90C /* Rates.swift in Sources */,
 				95EBC01A2D53D0B20019E90C /* Transaction.swift in Sources */,
 				1CA3B65A2D22B0F500176711 /* WalletViewController.swift in Sources */,
 				95EBC0162D53C4AE0019E90C /* WalletViewModel.swift in Sources */,

@@ -22,7 +22,6 @@ final class WalletViewModel {
     init(storageService: StorageService, rateService: RateService) {
         self.storageService = storageService
         self.rateService = rateService
-        rateService.fetchRate()
         rateService.ratePublisher
             .assign(to: \.bitcoinRate, on: self)
             .store(in: &cancellables)
