@@ -15,6 +15,14 @@ class TextFieldValidator: NSObject, UITextFieldDelegate {
         guard let currentText = textField.text else { return true }
         let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
         
+        // Handle the leading zero removal logic
+        if newText.hasPrefix("0") && !newText.hasPrefix("0.") && newText.count > 1 {
+            if string != "." && string != "," && string != "" {
+                textField.text = String(newText.dropFirst())
+                return false
+            }
+        }
+        
         // Handle comma at the beginning
         if newText.hasPrefix(",") || newText.hasPrefix(".") {
             textField.text = "0\(string)"
