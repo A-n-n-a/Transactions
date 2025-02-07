@@ -24,13 +24,30 @@ extension Double {
 
 extension Date {
     
-    private static let timeFormatter: DateFormatter = {
+    private static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         return formatter
     }()
     
     func getTime() -> String {
-        Date.timeFormatter.dateFormat = "HH:mm"
-        return Date.timeFormatter.string(from: self)
+        Date.dateFormatter.dateFormat = "HH:mm"
+        return Date.dateFormatter.string(from: self)
+    }
+    
+    func headerFormattedDate() -> String {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        guard let yesterday = calendar.date(byAdding: .day, value: -1, to: today) else {
+            return Date.dateFormatter.string(from: self)
+        }
+
+        if calendar.isDate(self, inSameDayAs: today) {
+            return "Today"
+        } else if calendar.isDate(self, inSameDayAs: yesterday) {
+            return "Yesterday"
+        } else {
+            Date.dateFormatter.dateFormat = "dd-MM-yyyy"
+            return Date.dateFormatter.string(from: self)
+        }
     }
 }

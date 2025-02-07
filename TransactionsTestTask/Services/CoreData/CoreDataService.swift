@@ -10,7 +10,7 @@ import CoreData
 import Foundation
 
 protocol StorageService {
-    func fetchTransactions() -> AnyPublisher<[String: [Transaction]], Never>
+    func fetchTransactions() -> AnyPublisher<[Transaction], Never>
     func fetchWalletBalance() -> AnyPublisher<Double, Never>
     func addTransaction(amount: Double, category: TransactionCategory) -> AnyPublisher<Void, Error>
     func updateWalletBalance(amount: Double) -> AnyPublisher<Void, Error>
@@ -36,7 +36,7 @@ final class CoreDataService: StorageService {
     }
     
     //MARK: - Transactions
-    func fetchTransactions() -> AnyPublisher<[String: [Transaction]], Never> {
+    func fetchTransactions() -> AnyPublisher<[Transaction], Never> {
         Future { promise in
             let request: NSFetchRequest<TransactionEntity> = TransactionEntity.fetchRequest()
             request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
@@ -44,17 +44,10 @@ final class CoreDataService: StorageService {
             do {
                 let result = try self.context.fetch(request)
                 let transactions = result.map { Transaction(entity: $0) }
-
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "dd-MM-yyyy"
-                let groupedTransactions = Dictionary(grouping: transactions) { transaction in
-                    return dateFormatter.string(from: transaction.date)
-                }
-
-                promise(.success(groupedTransactions))
+                promise(.success(transactions))
             } catch {
                 print("Failed to fetch transactions: \(error)")
-                promise(.success([:]))
+                promise(.success([]))
             }
         }
         .eraseToAnyPublisher()

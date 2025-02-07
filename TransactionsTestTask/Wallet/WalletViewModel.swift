@@ -36,9 +36,17 @@ final class WalletViewModel {
     func loadTransactions() {
         storageService.fetchTransactions()
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] groupedTransactions in
-                self?.transactionsByDate = groupedTransactions
-                self?.sortedDates = groupedTransactions.keys.sorted(by: >)
+            .sink { [weak self] transactions in
+                guard let self = self else { return }
+                
+                let sortedTransactions = transactions.sorted { $0.date > $1.date }
+                
+                let groupedTransactions = Dictionary(grouping: sortedTransactions) { transaction in
+                    return transaction.date.headerFormattedDate()
+                }
+                
+                self.transactionsByDate = groupedTransactions
+                self.sortedDates = Array(groupedTransactions.keys)
             }
             .store(in: &cancellables)
     }
