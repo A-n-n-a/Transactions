@@ -33,6 +33,7 @@
 		95EBC0302D551C000019E90C /* AddTransactionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC02F2D551C000019E90C /* AddTransactionCoordinator.swift */; };
 		95EBC0322D55D8B20019E90C /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0312D55D8B20019E90C /* NetworkService.swift */; };
 		95EBC0342D55D9A90019E90C /* Rates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0332D55D9A90019E90C /* Rates.swift */; };
+		95EBC0372D55E8720019E90C /* TextFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0362D55E8720019E90C /* TextFieldValidator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		95EBC02F2D551C000019E90C /* AddTransactionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionCoordinator.swift; sourceTree = "<group>"; };
 		95EBC0312D55D8B20019E90C /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		95EBC0332D55D9A90019E90C /* Rates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rates.swift; sourceTree = "<group>"; };
+		95EBC0362D55E8720019E90C /* TextFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldValidator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +139,7 @@
 			children = (
 				0DF1D1422D22DCD2001626E7 /* PerformOnce.swift */,
 				95EBC0232D54F7840019E90C /* Extensions.swift */,
+				95EBC0362D55E8720019E90C /* TextFieldValidator.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -380,6 +383,7 @@
 				95EBC0162D53C4AE0019E90C /* WalletViewModel.swift in Sources */,
 				1CA3B6562D22B0F500176711 /* AppDelegate.swift in Sources */,
 				95EBC0262D5511180019E90C /* Category.swift in Sources */,
+				95EBC0372D55E8720019E90C /* TextFieldValidator.swift in Sources */,
 				95EBC0242D54F7840019E90C /* Extensions.swift in Sources */,
 				1CA3B6582D22B0F500176711 /* SceneDelegate.swift in Sources */,
 				95EBC0292D5512DF0019E90C /* TransactionCell.swift in Sources */,

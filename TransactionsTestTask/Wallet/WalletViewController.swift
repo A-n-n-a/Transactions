@@ -11,6 +11,7 @@ class WalletViewController: UIViewController {
 
     private let viewModel: WalletViewModel
     private var cancellables = Set<AnyCancellable>()
+    private let textFieldValidator = TextFieldValidator()
     
     private let addTransactionSubject = PassthroughSubject<Void, Never>()
     var addTransactionPublisher: AnyPublisher<Void, Never> {
@@ -170,11 +171,12 @@ class WalletViewController: UIViewController {
     
     @objc private func didTapAddFunds() {
         let alert = UIAlertController(title: "Add Funds", message: "Enter the amount of BTC to add", preferredStyle: .alert)
-        alert.addTextField { textField in
+        alert.addTextField { [weak self] textField in
             textField.keyboardType = .decimalPad
+            textField.delegate = self?.textFieldValidator
         }
         let addAction = UIAlertAction(title: "Add", style: .default) { [weak self] _ in
-            if let text = alert.textFields?.first?.text, let amount = Double(text) {
+            if let text = alert.textFields?.first?.text, let amount = Double(text), amount != 0 {
                 self?.viewModel.addFunds(amount: amount)
             }
         }

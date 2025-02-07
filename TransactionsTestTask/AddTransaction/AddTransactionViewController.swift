@@ -12,6 +12,7 @@ class AddTransactionViewController: UIViewController {
     
     private var viewModel: AddTransactionViewModel
     private var cancellables = Set<AnyCancellable>()
+    private let textFieldValidator = TextFieldValidator()
     
     private let addTransactionSubject = PassthroughSubject<Void, Never>()
     var addTransactionPublisher: AnyPublisher<Void, Never> {
@@ -82,6 +83,7 @@ class AddTransactionViewController: UIViewController {
         categoryPicker.dataSource = self
         categoryPicker.delegate = self
         addButton.addTarget(self, action: #selector(addTransactionButtonTapped), for: .touchUpInside)
+        amountTextField.delegate = textFieldValidator
         
         view.addSubview(textFieldContainer)
         textFieldContainer.addSubview(amountTextField)
