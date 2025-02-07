@@ -17,7 +17,7 @@ class MockStorageService: StorageService {
     
     var shouldSucceed = true
     
-    func fetchTransactions() -> AnyPublisher<[Transaction], Never> {
+    func fetchTransactions(page: Int, limit: Int) -> AnyPublisher<[TransactionsTestTask.Transaction], Never> {
         return Just(transactions).eraseToAnyPublisher()
     }
     

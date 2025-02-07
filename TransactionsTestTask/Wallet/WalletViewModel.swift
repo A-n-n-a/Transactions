@@ -15,6 +15,9 @@ final class WalletViewModel {
     private let analyticsService: AnalyticsService
     private var cancellables = Set<AnyCancellable>()
     private(set) var sortedDates: [Date] = []
+    private var currentPage = 0
+    private let itemsPerPage = 20
+    private var allowedLoadTransactions = true
     
     @Published private(set) var balance = 0.0
     @Published private(set) var bitcoinRate = 0.0
@@ -41,29 +44,50 @@ final class WalletViewModel {
     }
     
     func loadTransactions() {
-        trackEvent(name: AnalyticsEvent.Name.loadTransactions)
         
-        storageService.fetchTransactions()
+        guard allowedLoadTransactions else { return }
+        
+        trackEvent(name: AnalyticsEvent.Name.loadTransactions, parameters: [AnalyticsEvent.Key.page: String(currentPage), AnalyticsEvent.Key.limit: String(itemsPerPage)])
+        
+        storageService.fetchTransactions(page: currentPage, limit: itemsPerPage)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] transactions in
                 guard let self = self else { return }
+                
+                if transactions.isEmpty {
+                    allowedLoadTransactions = false
+                }
                 
                 let groupedTransactions = Dictionary(grouping: transactions) { transaction in
                     return transaction.date.getDay()
                 }
                 
-                self.transactionsByDate = groupedTransactions
-                self.sortedDates = groupedTransactions.keys.sorted(by: >)
+                for (date, transactionsForDate) in groupedTransactions {
+                    if var existingTransactions = self.transactionsByDate[date] {
+                        existingTransactions.append(contentsOf: transactionsForDate)
+                        self.transactionsByDate[date] = existingTransactions
+                    } else {
+                        self.transactionsByDate[date] = transactionsForDate
+                    }
+                }
+                
+                let newDates = groupedTransactions.keys
+                self.sortedDates.append(contentsOf: newDates)
+                self.sortedDates = Array(Set(self.sortedDates)).sorted(by: >)
+                
+                self.currentPage += 1
             }
             .store(in: &cancellables)
     }
     
     func addFunds(amount: Double) {
+        resetPagination()
+        
         trackEvent(name: AnalyticsEvent.Name.addDeposit, parameters: [AnalyticsEvent.Key.amount: amount.btcFormatted()])
         
         storageService.addTransaction(amount: amount, category: .deposit)
             .sink(receiveCompletion: { [weak self] completion in
-                if case .failure(let error) = completion {
+                if case .failure(_) = completion {
                     self?.errorSubject.send("Error saving deposit")
                 }
             }, receiveValue: { [weak self] in
@@ -102,6 +126,13 @@ final class WalletViewModel {
 
     func titleForHeader(in section: Int) -> String {
         return sortedDates[section].headerFormattedDate()
+    }
+    
+    func resetPagination() {
+        allowedLoadTransactions = true
+        currentPage = 0
+        transactionsByDate = [:]
+        sortedDates = []
     }
     
     private func trackEvent(name: String, parameters: [String: String] = [:]) {

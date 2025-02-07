@@ -24,5 +24,7 @@ struct AnalyticsEvent {
         static var rate = "rate"
         static var category = "category"
         static var amount = "amount"
+        static var page = "page"
+        static var limit = "limit"
     }
 }

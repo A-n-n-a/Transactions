@@ -96,6 +96,7 @@ class WalletViewController: UIViewController {
         super.viewDidAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
         viewModel.loadBalance()
+        viewModel.resetPagination()
         viewModel.loadTransactions()
     }
 
@@ -226,4 +227,14 @@ extension WalletViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+            let contentHeight = scrollView.contentSize.height
+            let contentOffsetY = scrollView.contentOffset.y
+            let height = scrollView.frame.size.height
+            
+            if contentOffsetY > contentHeight - height - 50 {
+                viewModel.loadTransactions()
+            }
+        }
 }

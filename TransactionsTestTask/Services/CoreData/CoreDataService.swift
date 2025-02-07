@@ -10,7 +10,7 @@ import CoreData
 import Foundation
 
 protocol StorageService {
-    func fetchTransactions() -> AnyPublisher<[Transaction], Never>
+    func fetchTransactions(page: Int, limit: Int) -> AnyPublisher<[Transaction], Never>
     func fetchWalletBalance() -> AnyPublisher<Double, Never>
     func addTransaction(amount: Double, category: TransactionCategory) -> AnyPublisher<Void, Error>
     func updateWalletBalance(amount: Double) -> AnyPublisher<Void, Error>
@@ -36,11 +36,13 @@ final class CoreDataService: StorageService {
     }
     
     //MARK: - Transactions
-    func fetchTransactions() -> AnyPublisher<[Transaction], Never> {
+    func fetchTransactions(page: Int, limit: Int) -> AnyPublisher<[Transaction], Never> {
         Future { promise in
             let request: NSFetchRequest<TransactionEntity> = TransactionEntity.fetchRequest()
+            request.fetchOffset = page * limit 
+            request.fetchLimit = limit
             request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-
+            
             do {
                 let result = try self.context.fetch(request)
                 let transactions = result.map { Transaction(entity: $0) }
