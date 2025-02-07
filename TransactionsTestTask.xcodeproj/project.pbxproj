@@ -38,6 +38,7 @@
 		95EBC03D2D5623590019E90C /* MockAnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC03C2D5623590019E90C /* MockAnalyticsService.swift */; };
 		95EBC0402D5623BA0019E90C /* MockRateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC03F2D5623BA0019E90C /* MockRateService.swift */; };
 		95EBC0422D5625E30019E90C /* WalletViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0412D5625E30019E90C /* WalletViewModelTests.swift */; };
+		95EBC0442D5649920019E90C /* AnalyticsServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EBC0432D5649920019E90C /* AnalyticsServiceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +94,7 @@
 		95EBC03C2D5623590019E90C /* MockAnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAnalyticsService.swift; sourceTree = "<group>"; };
 		95EBC03F2D5623BA0019E90C /* MockRateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRateService.swift; sourceTree = "<group>"; };
 		95EBC0412D5625E30019E90C /* WalletViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewModelTests.swift; sourceTree = "<group>"; };
+		95EBC0432D5649920019E90C /* AnalyticsServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsServiceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +196,7 @@
 			children = (
 				95EBC0412D5625E30019E90C /* WalletViewModelTests.swift */,
 				95EBC0382D5621B70019E90C /* AddTransactionViewModelTests.swift */,
+				95EBC0432D5649920019E90C /* AnalyticsServiceTests.swift */,
 				95EBC03E2D5623880019E90C /* Mocks */,
 			);
 			path = TransactionsTestTaskTests;
@@ -422,6 +425,7 @@
 				95EBC0402D5623BA0019E90C /* MockRateService.swift in Sources */,
 				95EBC0392D5621B70019E90C /* AddTransactionViewModelTests.swift in Sources */,
 				95EBC03B2D56229D0019E90C /* MockStorageService.swift in Sources */,
+				95EBC0442D5649920019E90C /* AnalyticsServiceTests.swift in Sources */,
 				95EBC0422D5625E30019E90C /* WalletViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

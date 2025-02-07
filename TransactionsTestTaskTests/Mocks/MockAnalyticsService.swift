@@ -5,6 +5,7 @@
 //  Created by Anna on 2/7/25.
 //
 
+import Combine
 import Foundation
 @testable import TransactionsTestTask
 
@@ -21,8 +22,8 @@ class MockAnalyticsService: AnalyticsService {
         trackedEvents.append(event)
     }
     
-    func fetchEvents(name: String? = nil, from startDate: Date? = nil, to endDate: Date? = nil) -> [AnalyticsEvent] {
-        return trackedEvents.filter { event in
+    func fetchEvents(name: String? = nil, from startDate: Date? = nil, to endDate: Date? = nil) -> AnyPublisher<[AnalyticsEvent], Never> {
+        let filteredEvents = trackedEvents.filter { event in
             var matches = true
             
             if let name = name {
@@ -39,5 +40,8 @@ class MockAnalyticsService: AnalyticsService {
             
             return matches
         }
+        
+        return Just(filteredEvents)
+            .eraseToAnyPublisher()
     }
 }

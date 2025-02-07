@@ -16,7 +16,7 @@ import Combine
 
 protocol AnalyticsService {
     func trackEvent(name: String, parameters: [String: String])
-    func fetchEvents(name: String?, from startDate: Date?, to endDate: Date?) -> [AnalyticsEvent]
+    func fetchEvents(name: String?, from startDate: Date?, to endDate: Date?) -> AnyPublisher<[AnalyticsEvent], Never>
 }
 
 final class AnalyticsServiceImpl: AnalyticsService {
@@ -24,7 +24,7 @@ final class AnalyticsServiceImpl: AnalyticsService {
     private var cancellables = Set<AnyCancellable>()
     private var events: [AnalyticsEvent] = []
 
-    init(rateService: BitcoinRateService? = nil) {
+    init(rateService: RateService? = nil) {
         rateService?.ratePublisher
             .sink { newRate in
                 self.trackEvent(name: AnalyticsEvent.Name.btcRate, parameters: [AnalyticsEvent.Key.rate: "\(newRate)"])
@@ -42,8 +42,8 @@ final class AnalyticsServiceImpl: AnalyticsService {
         print("LOG: \(name) - \(parameters)")
     }
     
-    func fetchEvents(name: String? = nil, from startDate: Date? = nil, to endDate: Date? = nil) -> [AnalyticsEvent] {
-        return events.filter { event in
+    func fetchEvents(name: String? = nil, from startDate: Date? = nil, to endDate: Date? = nil) -> AnyPublisher<[AnalyticsEvent], Never> {
+        let filteredEvents = events.filter { event in
             var matches = true
             
             // Filter by event name
@@ -62,5 +62,8 @@ final class AnalyticsServiceImpl: AnalyticsService {
             
             return matches
         }
+        
+        return Just(filteredEvents)
+            .eraseToAnyPublisher()
     }
 }

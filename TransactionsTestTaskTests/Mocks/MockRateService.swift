@@ -15,7 +15,7 @@ class MockRateService: RateService {
         rateSubject.eraseToAnyPublisher()
     }
     
-    func sendRate(_ rate: Double) {
-        rateSubject.send(rate)
+    func simulateRateChange(newRate: Double) {
+        rateSubject.send(newRate)
     }
 }
